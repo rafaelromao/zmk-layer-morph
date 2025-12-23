@@ -1,0 +1,26 @@
+# Copyright (c) 2023 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: |
+    Layer Morph Behavior
+
+    The layer morph behavior morphs a keypress based on whether a given layer is active.
+
+compatible: "zmk,behavior-layer-morph"
+
+binding-cells: 0
+
+properties:
+    bindings:
+        type: phandle-array
+        required: true
+        description: |
+            The bindings to use for the layer morph. The first binding is the normal
+            binding, the second is the morphed binding.
+
+    layer:
+        type: int
+        required: true
+        description: |
+            The layer to check for. If this layer is active, the morphed binding
+            will be used.
