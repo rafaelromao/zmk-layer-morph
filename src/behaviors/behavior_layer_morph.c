@@ -9,8 +9,8 @@
 #include <drivers/behavior.h>
 #include <zephyr/device.h>
 #include <zephyr/logging/log.h>
-#include <zmk/behavior_queue.h>
 #include <zmk/behavior.h>
+#include <zmk/behavior_queue.h>
 #include <zmk/keymap.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
@@ -30,8 +30,7 @@ on_layer_morph_binding_pressed(struct zmk_behavior_binding *binding,
   const struct behavior_layer_morph_config *cfg = dev->config;
 
   if (zmk_keymap_layer_active(cfg->layer)) {
-    return zmk_behavior_queue_add(&event, cfg->morphed_binding, true,
-                                  0);
+    return zmk_behavior_queue_add(&event, cfg->morphed_binding, true, 0);
   } else {
     return zmk_behavior_queue_add(&event, cfg->normal_binding, true, 0);
   }
@@ -44,11 +43,9 @@ on_layer_morph_binding_released(struct zmk_behavior_binding *binding,
   const struct behavior_layer_morph_config *cfg = dev->config;
 
   if (zmk_keymap_layer_active(cfg->layer)) {
-    return zmk_behavior_queue_add(&event, cfg->morphed_binding, false,
-                                  0);
+    return zmk_behavior_queue_add(&event, cfg->morphed_binding, false, 0);
   } else {
-    return zmk_behavior_queue_add(&event, cfg->normal_binding, false,
-                                  0);
+    return zmk_behavior_queue_add(&event, cfg->normal_binding, false, 0);
   }
 }
 
@@ -81,3 +78,5 @@ DT_INST_FOREACH_STATUS_OKAY(LM_INST)
                "the morphed one")
 
 DT_INST_FOREACH_STATUS_OKAY(ASSERT_BINDING_LEN_2);
+
+#endif /* DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT) */
