@@ -30,10 +30,10 @@ on_layer_morph_binding_pressed(struct zmk_behavior_binding *binding,
   const struct behavior_layer_morph_config *cfg = dev->config;
 
   if (zmk_keymap_layer_active(cfg->layer)) {
-    return zmk_behavior_queue_add(event.position, cfg->morphed_binding, true,
+    return zmk_behavior_queue_add(&event, cfg->morphed_binding, true,
                                   0);
   } else {
-    return zmk_behavior_queue_add(event.position, cfg->normal_binding, true, 0);
+    return zmk_behavior_queue_add(&event, cfg->normal_binding, true, 0);
   }
 }
 
