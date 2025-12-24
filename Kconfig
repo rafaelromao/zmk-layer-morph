@@ -1,0 +1,5 @@
+DT_COMPAT_ZMK_BEHAVIOR_LAYER_MORPH := zmk,behavior-layer-morph
+
+config ZMK_BEHAVIOR_LAYER_MORPH
+ bool
+ default $(dt_compat_enabled,$(DT_COMPAT_ZMK_BEHAVIOR_LAYER_MORPH))
