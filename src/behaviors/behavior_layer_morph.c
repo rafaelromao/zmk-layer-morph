@@ -68,11 +68,10 @@ static int behavior_layer_morph_init(const struct device *dev) { return 0; };
           .morphed_binding = ZMK_KEYMAP_EXTRACT_BINDING(1, DT_DRV_INST(i)),    \
           .layer = DT_INST_PROP(i, layer),                                     \
   };
-
-BEHAVIOR_DT_INST_DEFINE(i, behavior_layer_morph_init, NULL, NULL,
-                        &behavior_layer_morph_config_##i, POST_KERNEL,
-                        CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,
-                        &behavior_layer_morph_driver_api);
+  BEHAVIOR_DT_INST_DEFINE(i, behavior_layer_morph_init, NULL, NULL,
+                          &behavior_layer_morph_config_##i, POST_KERNEL,
+                          CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,
+                          &behavior_layer_morph_driver_api);
 
 DT_INST_FOREACH_STATUS_OKAY(LM_INST)
 
