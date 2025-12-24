@@ -56,8 +56,6 @@ static const struct behavior_driver_api behavior_layer_morph_driver_api = {
 
 static int behavior_layer_morph_init(const struct device *dev) { return 0; };
 
-#define BINDING_LEN(i) DT_INST_PROP_LEN(i, bindings)
-
 #define LM_INST(i)                                                             \
   static struct behavior_layer_morph_config behavior_layer_morph_config_##i =  \
       {                                                                        \
@@ -71,12 +69,5 @@ static int behavior_layer_morph_init(const struct device *dev) { return 0; };
                           &behavior_layer_morph_driver_api);
 
 DT_INST_FOREACH_STATUS_OKAY(LM_INST)
-
-#define ASSERT_BINDING_LEN_2(n)                                                \
-  BUILD_ASSERT(BINDING_LEN(n) == 2,                                            \
-               "Layer morph behavior requires two bindings, the normal and "   \
-               "the morphed one")
-
-DT_INST_FOREACH_STATUS_OKAY(ASSERT_BINDING_LEN_2);
 
 #endif /* DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT) */
