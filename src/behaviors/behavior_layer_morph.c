@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 The ZMK Contributors
+ * Copyright (c) 2025 Rafael Romão
  *
  * SPDX-License-Identifier: MIT
  */
@@ -9,6 +9,7 @@
 #include <drivers/behavior.h>
 #include <zephyr/device.h>
 #include <zephyr/logging/log.h>
+#include <zmk/behavior_queue.h>
 #include <zmk/behavior.h>
 #include <zmk/keymap.h>
 
