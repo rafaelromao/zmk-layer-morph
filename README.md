@@ -1,6 +1,29 @@
 # ZMK Layer Morph Behavior
 
-The Layer Morph behavior (`&layer_morph`) morphs a keypress based on whether a given layer is active. This allows you to have a key that behaves differently depending on whether a given layer is active.
+The Layer Morph behavior morphs a keypress based on whether a given layer is active.
+
+## Usage
+
+To load the module, add the following entries to remotes and projects in config/west.yml.
+
+```dts
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    - name: rafaelromao
+      url-base: https://github.com/rafaelromao
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: v0.3
+      import: app/west.yml
+    - name: zmk-layer-morph
+      remote: rafaelromao
+      revision: v0.3 # set to same as ZMK version above
+  self:
+    path: config
+```
 
 ## Devicetree Binding
 
@@ -9,7 +32,7 @@ To use the layer morph behavior, you need to define it in your keymap file.
 ### Properties
 
 - `bindings`: A phandle-array of two bindings. The first binding is the "normal" binding, and the second is the "morphed" binding.
-- `layer`: The layer to check for. If this layer is active, the morphed binding will be used.
+- `layers`: The layer (or layers) to check for. If any of the specified layers are active, the morphed binding will be used. Can be a single layer like `<1>` or a list of layers like `<1 2>`.
 
 ### Example
 
@@ -22,8 +45,8 @@ Here is an example of how to define a layer morph behavior in your `.keymap` fil
         my_layer_morph: layer_morph {
             compatible = "zmk,behavior-layer-morph";
             #binding-cells = <0>;
-            // The layer to check for (e.g., layer 1)
-            layer = <1>;
+            // The layers to check for (e.g., layers 1 and 2)
+            layers = <1 2>;
             // The bindings for the normal and morphed keys
             // Normal: 'A', Morphed: 'B'
             bindings = <&kp A>, <&kp B>;
@@ -40,7 +63,7 @@ Here is an example of how to define a layer morph behavior in your `.keymap` fil
 };
 ```
 
-In this example, pressing the key will send `A`. If layer `1` is active, it will send `B` instead.
+In this example, pressing the key will send `A`. If layer `1` or layer `2` is active, it will send `B` instead.
 
 ## Advanced Example: MacOS and Linux Layers
 
@@ -60,16 +83,16 @@ The keymap has a default base layer for MacOS, and a secondary base layer for Li
         lm_copy: layer_morph_copy {
             compatible = "zmk,behavior-layer-morph";
             #binding-cells = <0>;
-            layer = <1>; // Check for Linux layer
-            bindings = <&kp LGUI C>, <&kp LCTL C>; // MacOS, Linux
+            layers = <1>; // Check for Linux layer
+            bindings = <&kp LG(C)>, <&kp LC(C)>; // MacOS, Linux
         };
 
         // Layer morph for paste
         lm_paste: layer_morph_paste {
             compatible = "zmk,behavior-layer-morph";
             #binding-cells = <0>;
-            layer = <1>; // Check for Linux layer
-            bindings = <&kp LGUI V>, <&kp LCTL V>; // MacOS, Linux
+            layers = <1>; // Check for Linux layer
+            bindings = <&kp LG(V)>, <&kp LC(V)>; // MacOS, Linux
         };
     };
 
@@ -110,6 +133,11 @@ The keymap has a default base layer for MacOS, and a secondary base layer for Li
 
 3.  **Layer Morph:**
     -   When the `shortcuts_layer` is active, the first key triggers the `&lm_copy` behavior.
-        -   If the `linux_layer` is **not** active (i.e., we are in MacOS mode), it sends `LGUI(C)` (Command-C).
-        -   If the `linux_layer` is active, it sends `LCTL(C)` (Control-C).
-    -   The second key triggers the `&lm_paste` behavior, which works similarly for pasting (`LGUI(V)` or `LCTL(V)`).
+        -   If the `linux_layer` is **not** active (i.e., we are in MacOS mode), it sends `LG(C)` (Command-C).
+        -   If the `linux_layer` is active, it sends `LC(C)` (Control-C).
+    -   The second key triggers the `&lm_paste` behavior, which works similarly for pasting (`LG(V)` or `LC(V)`).
+
+## Corne-ish Zen Example
+
+You can see a variation of the example above implemented for my Corne-ish Zen [here](https://github.com/rafaelromao/zmk-config-zen-2/pull/1/files).
+

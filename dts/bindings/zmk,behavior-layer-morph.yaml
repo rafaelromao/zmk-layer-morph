@@ -18,9 +18,9 @@ properties:
             The bindings to use for the layer morph. The first binding is the normal
             binding, the second is the morphed binding.
 
-    layer:
-        type: int
+    layers:
+        type: array
         required: true
         description: |
-            The layer to check for. If this layer is active, the morphed binding
-            will be used.
+            A layer or a list of layers to check for. If any of these layers is
+            active, the morphed binding will be used.
