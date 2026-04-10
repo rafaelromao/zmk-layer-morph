@@ -56,8 +56,16 @@ Here is an example of how to define a layer morph behavior in your `.keymap` fil
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
-            bindings = <&my_layer_morph>;
+        layer0 {
+            bindings = <&my_layer_morph &tog 1 &tog 2>;
+        };
+
+        layer1 {
+            bindings = <&trans &trans &trans>;
+        };
+
+        layer2 {
+            bindings = <&trans &trans &trans>;
         };
     };
 };
@@ -101,19 +109,19 @@ The keymap has a default base layer for MacOS, and a secondary base layer for Li
 
         macos_layer {
             bindings = <
-                &kp A  &kp B  &tog 1    &mo 2
+                &kp A &kp B &tog 1 &mo 2
             >;
         };
 
         linux_layer {
             bindings = <
-                &trans &trans &tog 1    &mo 2
+                &trans &trans &trans &trans
             >;
         };
 
         shortcuts_layer {
             bindings = <
-                &lm_copy &lm_paste &trans   &trans
+                &lm_copy &lm_paste &trans &trans
             >;
         };
     };
